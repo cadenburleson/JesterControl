@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Hand Gesture Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #2196F3;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .settings-group {
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        .range-value {
+            display: inline-block;
+            width: 30px;
+            text-align: right;
+        }
+
+        .save-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        .save-button:hover {
+            background-color: #45a049;
+        }
+
+        .reset-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .reset-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 3px;
+            margin-left: 22px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hand Gesture Settings</h1>
+
+    <div class="settings-group">
+        <h2>Scroll Settings</h2>
+        <label>
+            Scroll Threshold (pixels required to trigger)
+            <input type="range" id="scrollThreshold" min="5" max="50" step="1" value="20">
+            <span class="range-value" id="scrollThresholdValue">20</span>
+        </label>
+
+        <label>
+            Scroll Sensitivity (speed multiplier)
+            <input type="range" id="scrollSensitivity" min="0.5" max="3" step="0.1" value="1">
+            <span class="range-value" id="scrollSensitivityValue">1.0</span>
+        </label>
+
+        <label>
+            Scroll Inertia (higher = longer scroll)
+            <input type="range" id="scrollDecay" min="0.8" max="0.99" step="0.01" value="0.95">
+            <span class="range-value" id="scrollDecayValue">0.95</span>
+            <div class="info-text">Controls how quickly scrolling slows down</div>
+        </label>
+
+        <label>
+            Maximum Scroll Speed (pixels per frame)
+            <input type="range" id="maxScrollSpeed" min="10" max="100" step="5" value="50">
+            <span class="range-value" id="maxScrollSpeedValue">50</span>
+        </label>
+    </div>
+
+    <div class="settings-group">
+        <h2>Gesture Settings</h2>
+        <label>
+            Gesture Debounce (ms between gestures)
+            <input type="range" id="gestureDebounce" min="100" max="1000" step="50" value="500">
+            <span class="range-value" id="gestureDebounceValue">500</span>
+        </label>
+
+        <label>
+            Pinch Threshold (smaller = tighter pinch)
+            <input type="range" id="pinchThreshold" min="0.05" max="0.2" step="0.01" value="0.1">
+            <span class="range-value" id="pinchThresholdValue">0.10</span>
+        </label>
+    </div>
+
+    <div class="settings-group">
+        <h2>Display Settings</h2>
+        <label class="checkbox-label">
+            <input type="checkbox" id="showStatusIndicator" checked>
+            Show Status Indicator
+            <div class="info-text">Small indicator in the top-right showing current gesture</div>
+        </label>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="showVisualFeedback" checked>
+            Show Visual Feedback Panel
+            <div class="info-text">Displays camera feed with hand tracking visualization</div>
+        </label>
+
+        <button id="resetVisualFeedback" class="reset-button" style="margin-top: 10px; background-color: #2196F3;">
+            Reset Visual Feedback
+        </button>
+        <div class="info-text">If visual feedback isn't showing, click this button to force it</div>
+    </div>
+
+    <div class="settings-group">
+        <h2>Diagnostics & Troubleshooting</h2>
+
+        <div style="background-color: #f5f5f5; border-radius: 5px; padding: 15px; margin-bottom: 15px;">
+            <h3 style="margin-top: 0; color: #E91E63;">Hand Tracking Not Working?</h3>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button id="optimizeTracking"
+                    style="background-color: #9C27B0; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                    ⚡ Optimize for Better Detection
+                </button>
+                <div class="info-text" style="margin-left: 0;">Applies settings optimized for more lenient hand gesture
+                    detection</div>
+
+                <button id="forceShowPanel"
+                    style="background-color: #FF5722; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                    🚨 Force Show Panel on All Tabs
+                </button>
+                <div class="info-text" style="margin-left: 0;">Forces the visual feedback panel to appear on all open
+                    tabs</div>
+
+                <button id="restartTracking"
+                    style="background-color: #2196F3; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                    🔄 Restart Hand Tracking System
+                </button>
+                <div class="info-text" style="margin-left: 0;">Completely restarts the hand tracking system on the
+                    active tab</div>
+            </div>
+
+            <div style="margin-top: 15px; background-color: rgba(255, 193, 7, 0.2); padding: 10px; border-radius: 5px;">
+                <h4 style="margin-top: 0; color: #FF9800;">Common Issues:</h4>
+                <ul style="margin-bottom: 0; padding-left: 20px;">
+                    <li>Make sure your camera is enabled and working</li>
+                    <li>Hold your hand 1-2 feet from the camera with fingers extended</li>
+                    <li>Ensure your hand is well-lit and visible against the background</li>
+                    <li>Try the "Optimize for Better Detection" button for more lenient tracking</li>
+                    <li>Use "Force Show Panel" if the feedback panel isn't visible</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <button id="saveSettings" class="save-button">Save Settings</button>
+    <button id="resetSettings" class="reset-button">Reset to Defaults</button>
+
+    <script src="settings.js"></script>
+</body>
+
+</html>

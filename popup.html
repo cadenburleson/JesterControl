@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>JesterControl</title>
+    <meta charset="utf-8">
+    <style>
+        body {
+            width: 240px;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            padding: 12px;
+        }
+
+        .header {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+            color: #3f51b5;
+        }
+
+        .status {
+            margin-top: 4px;
+            font-size: 12px;
+            color: #757575;
+        }
+
+        .status.active {
+            color: #4caf50;
+        }
+
+        .status.inactive {
+            color: #f44336;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 46px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #3f51b5;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(22px);
+        }
+
+        .settings-link {
+            display: block;
+            margin-top: 10px;
+            text-align: right;
+            color: #3f51b5;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #212121;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 10px 0;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            background-color: #3f51b5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .button.secondary {
+            background-color: #757575;
+        }
+
+        .emergency-button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #FF5722;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .emergency-reset-button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #F44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .button-description {
+            font-size: 10px;
+            color: #757575;
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">JesterControl</h1>
+        </div>
+
+        <div id="status" class="status">Checking status...</div>
+
+        <div class="divider"></div>
+
+        <div class="toggle-row">
+            <span class="toggle-label">Hand Gestures</span>
+            <label class="switch">
+                <input type="checkbox" id="gestureToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="toggle-row">
+            <span class="toggle-label">Show Visual Feedback</span>
+            <label class="switch">
+                <input type="checkbox" id="toggleFeedback">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <button id="emergencyShowBtn" class="emergency-button">🚨 Force Show Panel</button>
+        <div class="button-description">Use if you can't see the hand tracking panel</div>
+
+        <button id="emergencyResetBtn" class="emergency-reset-button">🚨 EMERGENCY RESET</button>
+        <div class="button-description">Use if hand tracking is not responding correctly</div>
+
+        <div class="divider"></div>
+
+        <a href="#" id="openSettings" class="settings-link">Advanced Settings ⚙</a>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
